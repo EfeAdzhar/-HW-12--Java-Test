@@ -1,17 +1,27 @@
+import com.sun.source.tree.ModuleTree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+
 
 public class PasswordValidatorTest {
 
-      PasswordValidator passwordValidator;
+    @InjectMocks
+     private PasswordValidator passwordValidator;
 
     @Mock
     private CommonPasswordChecker commonPasswordChecker;
 
     @BeforeEach
     public void setUp() {
+        commonPasswordChecker = new CommonPasswordChecker();
         passwordValidator = new PasswordValidator(commonPasswordChecker);
     }
 
@@ -61,6 +71,11 @@ public class PasswordValidatorTest {
     }
 
     @Test
+    public void passwordHaveSpecialCharacters() {
+        assertTrue(passwordValidator.checkPasswordSpecialCharacter("passwordWith@"));
+    }
+
+    @Test
     public void passwordMustNotHaveSameContinuesNumbers() {
         assertFalse(passwordValidator.checkPasswordContinuousNumbers("123abcdefg"));
     }
@@ -68,5 +83,20 @@ public class PasswordValidatorTest {
     @Test
     public void passwordMustNotHaveSameNumber() {
         assertFalse(passwordValidator.checkPasswordSameNumber("222223456"));
+    }
+
+    @Test
+    public void passwordDontHaveSameContinuesNumbers() {
+        assertTrue(passwordValidator.checkPasswordContinuousNumbers("12abcdefg"));
+    }
+
+    @Test
+    public void passwordNotHaveSameNumber() {
+        assertTrue(passwordValidator.checkPasswordSameNumber("123456789"));
+    }
+
+    @Test
+    public void validPassword() {
+            assertTrue(passwordValidator.checkPassword("IC@n12345"));
     }
 }
