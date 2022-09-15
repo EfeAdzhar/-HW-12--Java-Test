@@ -84,6 +84,11 @@ public class PasswordValidatorTest {
 
     @Test
     public void validPassword() {
-        assertTrue(passwordValidator.checkPassword("EFeAdzh@r12345"));
+        assertTrue(passwordValidator.checkPassword("EFeAdzh@r1245"));
+    }
+
+    @Test
+    public void invalidPassword() {
+        assertFalse(passwordValidator.checkPassword("Ef@45"));
     }
 }

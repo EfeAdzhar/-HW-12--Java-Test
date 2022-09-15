@@ -13,8 +13,8 @@ public class PasswordValidator {
         if (!checkPasswordHasNumber(password)) return false;
         if (!checkPasswordSpecialCharacter(password)) return false;
         if (!checkPasswordContinuousNumbers(password)) return false;
+        if (commonPassword.checkCommonPassword(password)) return false;
         if (!checkPasswordSameNumber(password)) return false;
-        if (!commonPassword.checkCommonPassword(password)) return false;
         else return true;
     }
 
