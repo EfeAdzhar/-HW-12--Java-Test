@@ -21,7 +21,7 @@ public class PasswordValidatorTest {
 
     @BeforeEach
     public void setUp() {
-        commonPasswordChecker = new CommonPasswordChecker();
+        commonPasswordChecker = Mockito.mock(CommonPasswordChecker.class);
         passwordValidator = new PasswordValidator(commonPasswordChecker);
     }
 
@@ -97,6 +97,7 @@ public class PasswordValidatorTest {
 
     @Test
     public void validPassword() {
-            assertTrue(passwordValidator.checkPassword("IC@n12345"));
+        Mockito.when(commonPasswordChecker.checkCommonPassword(anyString())).thenReturn(false);
+            assertTrue(passwordValidator.checkPassword("BestP@ssword123"));
     }
 }
