@@ -1,7 +1,5 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mock;
 
@@ -18,21 +16,57 @@ public class PasswordValidatorTest {
     }
 
     @Test
-    public void testToShort() {
-        String password = "h";
-        assertFalse(passwordValidator.checkPassword(password));
+    public void nullShouldReturnFalse() {
+        assertFalse(passwordValidator.checkPasswordNull(null));
     }
 
     @Test
-    public void testToLong() {
-        String password = "1234567876543245676543234565432345643";
-        assertFalse(passwordValidator.checkPassword(password));
+    public void passwordShouldBeLargerThanEightSymbols() {
+        assertFalse(passwordValidator.checkPasswordLength("toShort"));
     }
 
-    //NOT WORKING
     @Test
-    public void testOk() {
-        String password = "1234567";
-        assertTrue(passwordValidator.checkPassword(password));
+    public void passwordShouldBeSmallerThanTwentyFiveSymbols() {
+        assertFalse(passwordValidator.checkPasswordLength("toLoooooooooooooooooooooooooong"));
+    }
+
+    @Test
+    public void passwordShouldBeGreaterThanEightSymbolsAndSmallerThenTwentyFiveSymbols() {
+        assertTrue(passwordValidator.checkPasswordLength("perfectPassword"));
+    }
+
+    @Test
+    public void passwordShouldNotHaveOnlyLowerCase() {
+        assertFalse(passwordValidator.checkPasswordUpperLowerCase("onlylowercase"));
+    }
+
+    @Test
+    public void passwordShouldNotHaveOnlyUpperCase() {
+        assertFalse(passwordValidator.checkPasswordUpperLowerCase("ONLYUPPERCASE"));
+    }
+
+    @Test
+    public void passwordShouldConsistUpperAndLowerCase() {
+        assertTrue(passwordValidator.checkPasswordUpperLowerCase("UPPERCASElowercase"));
+    }
+
+    @Test
+    public void passwordMustHaveNumbers() {
+        assertFalse(passwordValidator.checkPasswordHasNumber("noNumbers"));
+    }
+
+    @Test
+    public void passwordMustHaveSpecialCharacter() {
+        assertFalse(passwordValidator.checkPasswordSpecialCharacter("nospecialchars"));
+    }
+
+    @Test
+    public void passwordMustNotHaveSameContinuesNumbers() {
+        assertFalse(passwordValidator.checkPasswordContinuousNumbers("123abcdefg"));
+    }
+
+    @Test
+    public void passwordMustNotHaveSameNumber() {
+        assertFalse(passwordValidator.checkPasswordSameNumber("222223456"));
     }
 }

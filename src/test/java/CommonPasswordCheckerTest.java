@@ -26,9 +26,10 @@ public class CommonPasswordCheckerTest {
 
     public static Set<Arguments> setCommonPasswordChecker() {
          return Set.of(
-                 Arguments.of("hello"),
-                 Arguments.of(""),
-                 Arguments.of("what's up")
+                 Arguments.of("1234567"),
+                 Arguments.of("qwerty"),
+                 Arguments.of("abcdef"),
+                 Arguments.of("putinhuilo")
          );
     }
 }
