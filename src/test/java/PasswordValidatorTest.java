@@ -5,6 +5,7 @@ import org.mockito.Mockito;
 
 
 public class PasswordValidatorTest {
+
     private PasswordValidator passwordValidator;
 
     @BeforeEach
@@ -13,7 +14,7 @@ public class PasswordValidatorTest {
         passwordValidator = new PasswordValidator(commonPasswordChecker);
     }
     @Test
-    public void nullShouldReturnFalse() {
+    public void passwordShouldReturnFalseIfNull() {
         assertFalse(passwordValidator.checkPasswordNull(null));
     }
 
@@ -48,47 +49,37 @@ public class PasswordValidatorTest {
     }
 
     @Test
-    public void passwordMustHaveNumbers() {
+    public void passwordShouldHaveNumbers() {
         assertFalse(passwordValidator.checkPasswordHasNumber("noNumbers"));
     }
 
     @Test
-    public void passwordMustHaveSpecialCharacter() {
+    public void passwordShouldHaveSpecialCharacter() {
         assertFalse(passwordValidator.checkPasswordSpecialCharacter("nospecialchars"));
     }
 
     @Test
-    public void passwordHaveSpecialCharacters() {
+    public void passwordShouldHaveSpecialCharacters() {
         assertTrue(passwordValidator.checkPasswordSpecialCharacter("passwordWith@"));
     }
 
     @Test
-    public void passwordMustNotHaveSameContinuesNumbers() {
+    public void passwordShouldNotHaveSameContinuesNumbers() {
         assertFalse(passwordValidator.checkPasswordContinuousNumbers("123abcdefg"));
     }
 
     @Test
-    public void passwordMustNotHaveSameNumber() {
+    public void passwordShouldBeValidWhenNoDuplicateDigital() {
         assertFalse(passwordValidator.checkPasswordSameNumber("222223456"));
     }
 
     @Test
-    public void passwordDontHaveSameContinuesNumbers() {
-        assertTrue(passwordValidator.checkPasswordContinuousNumbers("12abcdefg"));
-    }
-
-    @Test
-    public void passwordNotHaveSameNumber() {
-        assertTrue(passwordValidator.checkPasswordSameNumber("123456789"));
-    }
-
-    @Test
-    public void validPassword() {
+    public void passwordIsValid() {
         assertTrue(passwordValidator.checkPassword("EFeAdzh@r1245"));
     }
 
     @Test
-    public void invalidPassword() {
+    public void passwordIsInvalid() {
         assertFalse(passwordValidator.checkPassword("Ef@45"));
     }
 }
