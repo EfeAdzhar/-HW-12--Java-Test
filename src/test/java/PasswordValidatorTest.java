@@ -1,30 +1,17 @@
-import com.sun.source.tree.ModuleTree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 
 public class PasswordValidatorTest {
-
-    @InjectMocks
-     private PasswordValidator passwordValidator;
-
-    @Mock
-    private CommonPasswordChecker commonPasswordChecker;
+    private PasswordValidator passwordValidator;
 
     @BeforeEach
-    public void setUp() {
-        commonPasswordChecker = Mockito.mock(CommonPasswordChecker.class);
+    public void setUp(){
+        CommonPasswordChecker commonPasswordChecker = Mockito.mock(CommonPasswordChecker.class);
         passwordValidator = new PasswordValidator(commonPasswordChecker);
     }
-
     @Test
     public void nullShouldReturnFalse() {
         assertFalse(passwordValidator.checkPasswordNull(null));
@@ -97,7 +84,6 @@ public class PasswordValidatorTest {
 
     @Test
     public void validPassword() {
-        Mockito.when(commonPasswordChecker.checkCommonPassword(anyString())).thenReturn(false);
-            assertTrue(passwordValidator.checkPassword("BestP@ssword123"));
+        assertTrue(passwordValidator.checkPassword("EFeAdzh@r12345"));
     }
 }
